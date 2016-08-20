@@ -12,9 +12,36 @@
 
 get_header(); ?>
 
+
+<?php $bg_img = rwmb_meta('dwp_banner_image', 'type=image');
+
+$bg_url = '';
+
+if (count($bg_img) > '0') {
+    foreach ($bg_img as $img) {
+        $bg = "{$img['full_url']}";
+        $bg_url = "background-image: url('" . $bg . "')";
+    }
+}
+
+?>
+
+<!-- ==== HEADERWRAP ==== -->
+	<div class="pagewrap" style="<?php echo $bg_url; ?>";
+	<header>
+    <?php if (rwmb_meta('dwp_banner_text') != '') {
+      echo '<h1>';
+      echo rwmb_meta('dwp_banner_text');
+      echo '</h1>';
+    } else {
+      the_title( '<h1 class="entry-title">', '</h1>' );
+    } ?>
+		</header>
+	</div><!-- /headerwrap -->
+
 <div class="container">
 <div class="row">
-	<div id="primary" class="col-md-9 col-lg-9">
+	<div id="primary" class="col-md-8 col-lg-8">
 		<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>

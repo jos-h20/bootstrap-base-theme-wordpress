@@ -11,7 +11,6 @@
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php wp_title( '|', true, 'right' ); ?></title>
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
@@ -22,8 +21,8 @@
 <div id="page" class="hfeed site">
 
 	<header id="masthead" class="site-header" role="banner">
-		<nav role="navigation">
-			<div class="navbar navbar-static-top navbar-default">
+		<nav role="navigation" id="navbar-main">
+			<div class="navbar navbar-inverse navbar-fixed-top">
 				<div class="container">
 					<!-- .navbar-toggle is used as the toggle for collapsed navbar content -->
 					<div class="navbar-header">
@@ -33,7 +32,17 @@
 							<span class="icon-bar"></span>
 						</button>
 
-						<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php bloginfo( 'name' ) ?>" rel="homepage"><?php bloginfo( 'name' ) ?></a>
+						<?php $logo = dwp_option('custom_logo', false, 'url'); ?>
+						<?php $logo_txt = dwp_option('logo-text'); ?>
+
+						<?php if($logo !== '') { ?>
+							<a class="navbar-brand" href="<?php bloginfo( 'url' ) ?>/" title="<?php bloginfo( 'name' ) ?>" rel="homepage"><img src="<?php echo $logo ?>" alt="<?php bloginfo( 'name' ) ?>"></a>
+						<?php } elseif ($logo_txt !== '') { ?>
+							<a class="navbar-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php bloginfo( 'name' ) ?>" rel="homepage"><?php echo $logo_txt;?></a>
+						<?php } else { ?>
+							<a class="navbar-brand" href="<?php bloginfo( 'url' ) ?>/" title="<?php bloginfo( 'name' ) ?>" rel="homepage"><?php bloginfo( 'name' ) ?></a>
+						<?php } ?>
+
 					</div>
 
 					<div class="navbar-collapse collapse navbar-responsive-collapse">
@@ -43,7 +52,7 @@
 							'theme_location' => 'primary',
 							'depth'      => 2,
 							'container'  => false,
-							'menu_class'     => 'nav navbar-nav navbar-right',
+							'menu_class'     => 'nav navbar-nav',
 							'walker'     => new Bootstrap_Walker_Nav_Menu()
 							);
 
